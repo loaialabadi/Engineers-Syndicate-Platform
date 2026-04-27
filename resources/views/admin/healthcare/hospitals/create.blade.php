@@ -19,6 +19,14 @@
             <input name="address" class="form-control">
         </div>
 
+        
+        
+
+        <div class="mb-2">
+            <label>الصورة</label>
+            <input name="image" type="file" class="form-control">
+        </div>
+
         <div class="mb-2">
             <label>رقم الهاتف</label>
             <input name="phone" class="form-control">

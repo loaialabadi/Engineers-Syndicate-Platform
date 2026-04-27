@@ -13,6 +13,8 @@ class Doctor extends Model
         'address',
         'discount_percent',
         'is_active',
+        'image',
+        
     ];
 
     protected $casts = [

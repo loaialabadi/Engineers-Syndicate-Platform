@@ -9,6 +9,7 @@ class Hospital extends Model
     protected $fillable = [
         'name',
         'address',
+        'image',    
         'phone',
         'discount_percent',
         'is_active',

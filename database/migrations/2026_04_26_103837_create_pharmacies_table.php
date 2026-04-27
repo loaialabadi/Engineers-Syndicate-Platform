@@ -15,8 +15,10 @@ Schema::create('pharmacies', function (Blueprint $table) {
     $table->id();
 
     $table->string('name');
-    $table->string('address')->nullable();
+    $table->string('specialty')->nullable();
     $table->string('phone')->nullable();
+    $table->string('image')->nullable();
+    $table->string('address')->nullable();
 
     $table->decimal('discount_percent', 5, 2)->default(0);
 

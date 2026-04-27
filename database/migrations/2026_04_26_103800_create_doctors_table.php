@@ -17,6 +17,7 @@ Schema::create('doctors', function (Blueprint $table) {
     $table->string('name');
     $table->string('specialty')->nullable();
     $table->string('phone')->nullable();
+    $table->string('image')->nullable();
     $table->string('address')->nullable();
 
     $table->decimal('discount_percent', 5, 2)->default(0);

@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\Admin\Healthcare;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hospital;
-use Illuminate\Http\Request;    
+use Illuminate\Http\Request;
 
 class HospitalController extends Controller
 {
@@ -13,7 +14,6 @@ class HospitalController extends Controller
         return view('admin.healthcare.hospitals.index', compact('hospitals'));
     }
 
-    // *** هذه هي الدالة التي يجب إضافتها ***
     public function create()
     {
         return view('admin.healthcare.hospitals.create');
@@ -21,14 +21,34 @@ class HospitalController extends Controller
 
     public function store(Request $request)
     {
-        // يفضل إضافة التحقق هنا لضمان جودة البيانات
         $request->validate([
-            'name' => 'required',
-            'discount_percent' => 'nullable|numeric'
+            'name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'discount_percent' => 'nullable|numeric|min:0|max:100',
+            'is_active' => 'nullable|boolean',
+            'image' => 'nullable|image|max:2048',   
         ]);
 
-        Hospital::create($request->all());
-        return redirect()->route('admin.healthcare.hospitals.index')->with('success', 'تمت الإضافة بنجاح');
+        $data = $request->only([
+            'name',
+            'address',
+            'phone',
+            'discount_percent',
+            'is_active'
+
+        ]);
+if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('hospitals', 'public');
+        }   
+        // default value
+        $data['is_active'] = $request->has('is_active') ? 1 : 1;
+
+        Hospital::create($data);
+
+        return redirect()
+            ->route('admin.healthcare.hospitals.index')
+            ->with('success', 'تمت الإضافة بنجاح');
     }
 
     public function edit(Hospital $hospital)
@@ -38,13 +58,33 @@ class HospitalController extends Controller
 
     public function update(Request $request, Hospital $hospital)
     {
-        $hospital->update($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'discount_percent' => 'nullable|numeric|min:0|max:100',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $data = $request->only([
+            'name',
+            'address',
+            'phone',
+            'discount_percent',
+            'is_active'
+        ]);
+
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        $hospital->update($data);
+
         return back()->with('success', 'تم التحديث');
     }
 
     public function destroy(Hospital $hospital)
     {
         $hospital->delete();
+
         return back()->with('success', 'تم الحذف');
     }
 }

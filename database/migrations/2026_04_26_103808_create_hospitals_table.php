@@ -14,9 +14,11 @@ return new class extends Migration
 Schema::create('hospitals', function (Blueprint $table) {
     $table->id();
 
-    $table->string('name');
-    $table->string('address')->nullable();
+      $table->string('name');
+    $table->string('specialty')->nullable();
     $table->string('phone')->nullable();
+    $table->string('image')->nullable();
+    $table->string('address')->nullable();
 
     $table->decimal('discount_percent', 5, 2)->default(0);
 

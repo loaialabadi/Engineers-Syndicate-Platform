@@ -17,6 +17,7 @@
                 <th>التخصص</th>
                 <th>الخصم</th>
                 <th>الإجراءات</th>
+                <th>الصورة</th> 
             </tr>
         </thead>
 
@@ -33,7 +34,17 @@
                         @csrf @method('DELETE')
                         <button class="btn btn-sm btn-danger">حذف</button>
                     </form>
-                </td>
+                </td>                    
+
+<td>
+    @if($doctor->image)
+        <img src="{{ asset('storage/' . $doctor->image) }}"
+             style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+    @else
+        <img src="{{ asset('images/aaa.jpeg
+             style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+    @endif
+</td>
             </tr>
         @endforeach
         </tbody>
