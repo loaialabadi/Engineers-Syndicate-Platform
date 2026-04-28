@@ -6,7 +6,7 @@
 
     <h3 class="mb-3">إضافة صيدلية</h3>
 
-    <form method="POST" action="{{ route('admin.healthcare.pharmacies.store') }}">
+    <form method="POST" action="{{ route('admin.healthcare.pharmacies.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-2">
@@ -27,6 +27,10 @@
         <div class="mb-2">
             <label>نسبة الخصم (%)</label>
             <input name="discount_percent" type="number" min="0" max="100" class="form-control">
+        </div>
+        <div class="mb-2">
+            <label>الصورة</label>
+            <input name="image" type="file" class="form-control">
         </div>
 
         <div class="mb-2">

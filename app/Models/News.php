@@ -28,4 +28,14 @@ class News extends Model
     {
         return $query->where('is_published', true);
     }
+
+        // 🔹 Accessor: full image URL
+        public function getImageUrlAttribute()
+        {
+            if ($this->image) {
+                return asset('storage/' . $this->image);
+            }
+    
+            return asset('images/default.png');
+        }   
 }

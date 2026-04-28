@@ -24,8 +24,26 @@ class PharmacyController extends Controller
     {
         $request->validate([
             'name' => 'required',
+                'address' => 'nullable|string|max:255',
+                'phone' => 'nullable|string|max:20',
+                'image' => 'nullable|image|max:2048',
+                'is_active' => 'nullable|boolean',
             'discount_percent' => 'required|numeric'
         ]);
+        
+         $data = $request->only([
+            'name',
+            
+            'address',
+            'phone',
+            'is_active',
+            'discount_percent'
+        ]);
+        // لو مفيش is_active خليه default = 1
+        $data['is_active'] = $request->has('is_active') ? 1 : 1;    
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('pharmacies', 'public');
+        }
 
         Pharmacy::create($request->all());
         return redirect()->route('admin.healthcare.pharmacies.index')->with('success', 'تمت إضافة الصيدلية بنجاح');

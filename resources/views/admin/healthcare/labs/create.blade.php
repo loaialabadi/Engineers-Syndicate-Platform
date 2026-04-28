@@ -6,7 +6,7 @@
 
     <h3 class="mb-3">إضافة معمل</h3>
 
-    <form method="POST" action="{{ route('admin.healthcare.labs.store') }}">
+    <form method="POST" action="{{ route('admin.healthcare.labs.store') }} " enctype="multipart/form-data">
         @csrf
 
         <div class="mb-2">
@@ -23,6 +23,10 @@
             <label>رقم الهاتف</label>
             <input name="phone" class="form-control">
         </div>
+        
+        <div class="mb-2">
+            <label>الصورة</label>
+            <input name="image" type="file" class="form-control">   
 
         <div class="mb-2">
             <label>مواعيد العمل</label>

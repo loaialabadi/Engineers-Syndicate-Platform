@@ -6,7 +6,7 @@
 
     <h3 class="mb-3">إضافة مستشفى</h3>
 
-    <form method="POST" action="{{ route('admin.healthcare.hospitals.store') }}">
+    <form method="POST" action="{{ route('admin.healthcare.hospitals.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-2">

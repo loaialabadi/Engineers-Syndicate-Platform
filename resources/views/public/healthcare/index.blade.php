@@ -45,7 +45,7 @@
 
                         <div class="card h-100 shadow-sm border-0 hover-shadow">
 
-                            <img src="{{ $doctor->image ? asset('storage/'.$doctor->image) : $defaultImage }}"
+                            <img src="{{ $doctor->image_url }}"
                                  class="card-img-top"
                                  style="height:220px; object-fit:cover;">
 
@@ -117,7 +117,7 @@
 
                         <div class="card h-100 shadow-sm border-0 hover-shadow">
 
-                            <img src="{{ $hospital->image ? asset('storage/'.$hospital->image) : $defaultImage }}"
+                            <img src="{{$hospital->image_url}}"
                                  class="card-img-top"
                                  style="height:200px; object-fit:cover;">
 
@@ -181,7 +181,7 @@
 
                         <div class="card h-100 shadow-sm border-0 hover-shadow">
 
-                            <img src="{{ $pharmacy->image ? asset('storage/'.$pharmacy->image) : $defaultImage }}"
+                            <img src="{{$pharmacy->image_url}}"
                                  class="card-img-top"
                                  style="height:200px; object-fit:cover;">
 
@@ -245,7 +245,7 @@
 
                         <div class="card h-100 shadow-sm border-0 hover-shadow">
 
-                            <img src="{{ $lab->image ? asset('storage/'.$lab->image) : $defaultImage }}"
+                            <img src="{{ $lab->image_url }}"
                                  class="card-img-top"
                                  style="height:200px; object-fit:cover;">
 

@@ -45,7 +45,6 @@ if ($request->hasFile('image')) {
         $data['is_active'] = $request->has('is_active') ? 1 : 1;
 
         Hospital::create($data);
-
         return redirect()
             ->route('admin.healthcare.hospitals.index')
             ->with('success', 'تمت الإضافة بنجاح');
