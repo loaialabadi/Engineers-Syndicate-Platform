@@ -29,6 +29,8 @@ class PharmacyController extends Controller
                 'image' => 'nullable|image|max:2048',
                 'is_active' => 'nullable|boolean',
             'discount_percent' => 'required|numeric'
+,
+            
         ]);
         
          $data = $request->only([
@@ -45,9 +47,20 @@ class PharmacyController extends Controller
             $data['image'] = $request->file('image')->store('pharmacies', 'public');
         }
 
-        Pharmacy::create($request->all());
-        return redirect()->route('admin.healthcare.pharmacies.index')->with('success', 'تمت إضافة الصيدلية بنجاح');
-    }
+        $data = $request->only([
+            'name',
+            'specialty',
+            'phone',
+            'address',
+            'discount_percent',
+            'is_active'
+        ]);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('pharmacies', 'public');
+        }
+        Pharmacy::create($data);
+        return redirect()->route('admin.healthcare.pharmacies.index')->with('success', 'تم إضافة الصيدلية بنجاح');} 
+
 
     public function edit(Pharmacy $pharmacy)
     {
