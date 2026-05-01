@@ -10,7 +10,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CommitteeController as AdminCommitteeController;
 use App\Http\Controllers\Admin\TripController as AdminTripController;
-use App\Http\Controllers\Admin\StadiumBookingController;
+
+use App\Http\Controllers\Admin\Stadium\StadiumBookingController;
+use App\Http\Controllers\Admin\Stadium\StadiumSettingsController;
+
 use App\Http\Controllers\Admin\TripBookingController;
 use Illuminate\Support\Facades\Route;
 // Admin Healthcare Controllers (تأكد من المسارات هنا)
@@ -45,8 +48,13 @@ Route::prefix('trips')->name('trips.')->group(function () {
 });
 
 Route::prefix('stadium')->name('stadium.')->group(function () {
+
     Route::get('/', [StadiumController::class, 'index'])->name('index');
+
     Route::post('/book', [StadiumController::class, 'store'])->name('book');
+
+    Route::get('/slots', [StadiumController::class, 'slots'])->name('slots');
+
 });
 
 
@@ -69,11 +77,24 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Trips
     Route::resource('trips', AdminTripController::class)->except(['show']);
 
-    // Stadium Bookings
-    Route::get('bookings/stadium', [StadiumBookingController::class, 'index'])
-        ->name('bookings.stadium');
-    Route::patch('bookings/stadium/{booking}/status', [StadiumBookingController::class, 'updateStatus'])
-        ->name('bookings.stadium.status');
+    // Stadium Module
+    Route::prefix('stadium')->name('stadium.')->group(function () {
+
+        // Bookings
+        Route::get('bookings', [StadiumBookingController::class, 'index'])
+            ->name('bookings');
+
+        Route::patch('bookings/{booking}/status', [StadiumBookingController::class, 'updateStatus'])
+            ->name('bookings.status');
+
+        // Settings
+        Route::get('settings', [StadiumSettingsController::class, 'index'])
+            ->name('settings');
+
+        Route::post('settings', [StadiumSettingsController::class, 'update'])
+            ->name('settings.update');
+
+    });
 
     // Trip Bookings
     Route::get('bookings/trips', [TripBookingController::class, 'index'])

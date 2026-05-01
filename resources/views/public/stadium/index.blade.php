@@ -1,91 +1,197 @@
 @extends('layouts.public')
-@section('title','حجز الملعب')
+
+@section('title','حجز ملعب النقابة')
+
 @section('content')
+
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-7">
-            <h2 class="section-title">حجز ملعب النقابة</h2>
-            <div class="card p-4 mb-4" style="background:linear-gradient(135deg,#1a3a5c,#2d5a8e);color:#fff;border:none">
-                <div class="row text-center g-3">
-                    <div class="col-4">
-                        <i class="bi bi-clock fs-2" style="color:#c8a84b"></i>
-                        <p class="small mb-0 mt-1">من 7ص حتى 10م</p>
+        <div class="col-lg-8">
+
+            <h2 class="text-center mb-4">حجز ملعب النقابة</h2>
+
+            {{-- Info --}}
+            <div class="card p-4 mb-4 text-white border-0"
+                 style="background:linear-gradient(135deg,#1a3a5c,#2d5a8e);">
+
+                <div class="row text-center">
+
+                    <div class="col-3">
+                        ⏰ من {{ $settings['stadium_open_time'] ?? '07:00' }}
+                        إلى {{ $settings['stadium_close_time'] ?? '22:00' }}
                     </div>
-                    <div class="col-4">
-                        <i class="bi bi-calendar-check fs-2" style="color:#c8a84b"></i>
-                        <p class="small mb-0 mt-1">كل أيام الأسبوع</p>
+
+                    <div class="col-3">
+                        💰 {{ $settings['stadium_price'] ?? 0 }} جنيه / ساعة
                     </div>
-                    <div class="col-4">
-                        <i class="bi bi-whatsapp fs-2" style="color:#c8a84b"></i>
-                        <p class="small mb-0 mt-1">تأكيد عبر واتساب</p>
+
+                    <div class="col-3">
+                        📲 {{ $settings['whatsapp_number'] ?? '---' }}
                     </div>
+
+                    <div class="col-3">
+                        📞 {{ $settings['contact_phone'] ?? '---' }}
+                    </div>
+
                 </div>
+
             </div>
 
-            @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0 small">
-                    @foreach($errors->all() as $e)
-                        <li>{{ $e }}</li>
-                    @endforeach
-                </ul>
+            {{-- اختيار التاريخ --}}
+            <div class="card p-4 mb-4">
+
+                <form method="GET" action="{{ route('stadium.index') }}">
+
+                    <label class="fw-bold mb-2">اختار اليوم</label>
+
+                    <input type="date"
+                           name="date"
+                           value="{{ $date ?? '' }}"
+                           min="{{ date('Y-m-d') }}"
+                           class="form-control mb-3"
+                           required>
+
+                    <button class="btn btn-primary w-100">
+                        عرض الساعات
+                    </button>
+
+                </form>
+
             </div>
+
+            {{-- اليوم --}}
+            @if(!empty($date))
+                <div class="alert alert-info text-center fw-bold">
+                    📅 {{ $dayName }} — {{ $date }}
+                </div>
             @endif
 
+            {{-- errors --}}
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $e)
+                        <div>{{ $e }}</div>
+                    @endforeach
+                </div>
+            @endif
+
+            {{-- no slots --}}
+            @if(!empty($date) && empty($slots))
+                <div class="alert alert-warning text-center">
+                    لا توجد ساعات متاحة في هذا اليوم
+                </div>
+            @endif
+
+            {{-- slots --}}
+            @if(!empty($slots))
+
             <div class="card p-4">
-                <h5 class="fw-bold mb-4"><i class="bi bi-calendar-plus me-2" style="color:#1a3a5c"></i>نموذج الحجز</h5>
-                <form action="{{ route('stadium.book') }}" method="POST">
+
+                <form method="POST" action="{{ route('stadium.book') }}">
                     @csrf
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">الاسم الكامل <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}" required>
-                            @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">رقم الهاتف <span class="text-danger">*</span></label>
-                            <input type="tel" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                                value="{{ old('phone') }}" required>
-                            @error('phone')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-bold">البريد الإلكتروني <span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" required>
-                            @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-bold">تاريخ الحجز <span class="text-danger">*</span></label>
-                            <input type="date" name="booking_date" class="form-control @error('booking_date') is-invalid @enderror"
-                                value="{{ old('booking_date') }}" min="{{ date('Y-m-d') }}" required>
-                            @error('booking_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">وقت البدء <span class="text-danger">*</span></label>
-                            <input type="time" name="start_time" class="form-control @error('start_time') is-invalid @enderror"
-                                value="{{ old('start_time') }}" required>
-                            @error('start_time')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">وقت الانتهاء <span class="text-danger">*</span></label>
-                            <input type="time" name="end_time" class="form-control @error('end_time') is-invalid @enderror"
-                                value="{{ old('end_time') }}" required>
-                            @error('end_time')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-bold">الغرض من الحجز</label>
-                            <textarea name="purpose" class="form-control" rows="3">{{ old('purpose') }}</textarea>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary fw-bold w-100 py-3">
-                                <i class="bi bi-check2-circle me-2"></i>تأكيد الحجز والتواصل عبر واتساب
-                            </button>
-                        </div>
+
+                    <input type="hidden" name="booking_date" value="{{ $date }}">
+
+                    <h5 class="mb-3">اختار الوقت</h5>
+
+                    <div class="row">
+
+                        @foreach($slots as $slot)
+
+                            <div class="col-3 mb-2">
+
+                                @if($slot['booked'])
+
+                                    <button class="btn btn-danger w-100" disabled>
+                                        {{ $slot['start'] }}<br>
+                                        <small>محجوز</small>
+                                    </button>
+
+                                @else
+
+                                    @php
+                                        $slotId = 'slot_' . $loop->index;
+                                    @endphp
+
+                                    <input type="checkbox"
+                                           class="btn-check"
+                                           name="slots[]"
+                                           value="{{ $slot['start'].'-'.$slot['end'] }}"
+                                           id="{{ $slotId }}"
+                                           autocomplete="off">
+
+                                    <label class="btn btn-outline-success w-100"
+                                           for="{{ $slotId }}">
+
+                                        {{ $slot['start'] }} - {{ $slot['end'] }}
+
+                                        <br>
+
+                                        <small>
+                                            {{ $settings['stadium_price'] ?? 0 }} جنيه
+                                        </small>
+
+                                    </label>
+
+                                @endif
+
+                            </div>
+
+                        @endforeach
+
                     </div>
+
+                    <hr>
+
+                    {{-- بيانات المستخدم --}}
+                    <h5 class="mb-3">بيانات الحجز</h5>
+
+                    <div class="row g-2">
+
+                        <div class="col-12">
+                            <input name="name"
+                                   class="form-control"
+                                   placeholder="الاسم"
+                                   required>
+                        </div>
+
+                        <div class="col-12">
+                            <input name="phone"
+                                   class="form-control"
+                                   placeholder="رقم الهاتف"
+                                   required>
+                        </div>
+
+                        <div class="col-12">
+                            <select name="is_engineer" class="form-control">
+                                <option value="1">مهندس</option>
+                                <option value="0">غير مهندس</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-success w-100 mt-3">
+                        تأكيد الحجز عبر واتساب
+                    </button>
+
                 </form>
+
             </div>
+
+            @endif
+
         </div>
     </div>
 </div>
+
+{{-- UI fix --}}
+<style>
+.btn-check:checked + .btn {
+    background-color: #198754 !important;
+    color: #fff !important;
+    border-color: #198754 !important;
+}
+</style>
+
 @endsection

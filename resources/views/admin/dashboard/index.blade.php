@@ -34,7 +34,7 @@
         <div class="card">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h6 class="fw-bold mb-0"><i class="bi bi-trophy me-2 text-warning"></i>آخر حجوزات الملعب</h6>
-                <a href="{{ route('admin.bookings.stadium') }}" class="btn btn-sm btn-outline-primary">عرض الكل</a>
+                <a href="{{ route('admin.stadium.bookings') }}" class="btn btn-sm btn-outline-primary">عرض الكل</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover mb-0">

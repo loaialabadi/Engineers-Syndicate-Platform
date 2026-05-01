@@ -34,6 +34,12 @@
         .badge-published { background: #198754; }
         .whatsapp-btn { background: #25d366; border-color: #25d366; color: #fff; font-weight: 700; }
         .whatsapp-btn:hover { background: #1da851; border-color: #1da851; color: #fff; }
+        
+
+        input[type="checkbox"]:checked + label {
+    background: #198754 !important;
+    color: #fff !important;
+}
     </style>
     @stack('styles')
 </head>

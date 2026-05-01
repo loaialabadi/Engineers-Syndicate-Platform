@@ -14,26 +14,27 @@ return new class extends Migration
 Schema::create('stadium_bookings', function (Blueprint $table) {
     $table->id();
 
+    $table->string('booking_reference')->unique();
+
     $table->string('name');
-    $table->string('email');
     $table->string('phone');
+    $table->boolean('is_engineer')->default(false);
 
     $table->date('booking_date');
     $table->time('start_time');
     $table->time('end_time');
 
-    $table->string('purpose')->nullable();
-
-    $table->string('booking_reference')->unique();
+    $table->unsignedInteger('total_hours')->nullable();
 
     $table->enum('status', ['pending', 'confirmed', 'rejected'])->default('pending');
 
+    $table->text('purpose')->nullable();
     $table->text('admin_notes')->nullable();
 
+    $table->softDeletes();
     $table->timestamps();
 
-    // تحسين الأداء
-    $table->index(['booking_date', 'start_time', 'end_time']);
+    $table->index(['booking_date', 'status']);
 });
     }
 

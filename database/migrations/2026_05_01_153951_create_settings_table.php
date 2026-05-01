@@ -1,0 +1,35 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('settings', function (Blueprint $table) {
+            $table->id();
+
+            // مفتاح الإعداد (unique identifier)
+            $table->string('key')->unique();
+
+            // القيمة (مرنة: رقم / نص / JSON)
+            $table->text('value')->nullable();
+
+            // وصف للإعداد (اختياري يساعد الأدمن)
+            $table->string('description')->nullable();
+
+            // تصنيف الإعداد (stadium / trips / general / whatsapp ...)
+            $table->string('group')->default('general');
+
+            $table->timestamps();
+
+            $table->index(['group', 'key']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('settings');
+    }
+};

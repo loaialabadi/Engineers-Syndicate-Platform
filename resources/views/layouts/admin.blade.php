@@ -76,7 +76,7 @@
 
 
         <span class="nav-section">إدارة الحجوزات</span>
-        <a href="{{ route('admin.bookings.stadium') }}" class="nav-link {{ request()->routeIs('admin.bookings.stadium*') ? 'active' : '' }}">
+        <a href="{{ route('admin.stadium.bookings') }}" class="nav-link {{ request()->routeIs('admin.bookings.stadium*') ? 'active' : '' }}">
             <i class="bi bi-trophy-fill"></i> حجوزات الملعب
         </a>
         <a href="{{ route('admin.bookings.trips') }}" class="nav-link {{ request()->routeIs('admin.bookings.trips*') ? 'active' : '' }}">
