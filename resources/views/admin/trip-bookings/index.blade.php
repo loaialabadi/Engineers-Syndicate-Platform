@@ -16,7 +16,7 @@
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
             <thead class="table-dark">
-                <tr><th>المرجع</th><th>الاسم</th><th>الرحلة</th><th>المقاعد</th><th>الإجمالي</th><th>الحالة</th><th>الإجراءات</th></tr>
+                <tr><th>المرجع</th><th>الاسم</th><th>الرحلة</th><th>المقاعد</th><th>رقم العضوية</th><th>الحالة</th><th>الإجراءات</th></tr>
             </thead>
             <tbody>
                 @forelse($bookings as $booking)
@@ -28,7 +28,7 @@
                     </td>
                     <td><small>{{ Str::limit($booking->trip?->title, 35) ?? '—' }}</small></td>
                     <td>{{ $booking->seats }}</td>
-                    <td>{{ number_format($booking->total_price) }} ج</td>
+                    <td>{{ $booking->membership_number }}</td>
                     <td><span class="badge bg-{{ $booking->status_badge_class }}">{{ $booking->status }}</span></td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#tmodal-{{ $booking->id }}">

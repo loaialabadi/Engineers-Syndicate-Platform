@@ -14,4 +14,10 @@ class CommitteeController extends Controller
 
         return view('public.committees.index', compact('committees'));
     }
+    public function show($id)
+{
+    $committee = Committee::findOrFail($id);
+    return view('public.committees.show', compact('committee'));
+}
+
 }

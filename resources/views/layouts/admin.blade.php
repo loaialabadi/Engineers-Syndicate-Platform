@@ -63,16 +63,16 @@
         <a href="{{ route('admin.committees.index') }}" class="nav-link {{ request()->routeIs('admin.committees*') ? 'active' : '' }}">
             <i class="bi bi-people-fill"></i> اللجان
         </a>
-        <a href="{{ route('admin.trips.index') }}" class="nav-link {{ request()->routeIs('admin.trips*') ? 'active' : '' }}">
-            <i class="bi bi-geo-alt-fill"></i> الرحلات
-        </a>
+    
 
 
 
             <a href="{{ route('admin.healthcare.dashboard') }}" class="nav-link {{ request()->routeIs('admin.healthcare*') ? 'active' : '' }}"> 
                 <i class="bi bi-hospital"></i> الرعاية الصحية
             </a>
-
+        <a href="{{ route('admin.trips.index') }}" class="nav-link {{ request()->routeIs('admin.trips*') ? 'active' : '' }}">
+            <i class="bi bi-geo-alt-fill"></i> الرحلات
+        </a>
 
 
         <span class="nav-section">إدارة الحجوزات</span>

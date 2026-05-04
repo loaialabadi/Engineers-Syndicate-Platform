@@ -123,7 +123,7 @@ class StadiumController extends Controller
             'status' => 'pending',
         ]);
 
-        $whatsapp = Setting::where('key','whatsapp_number')->value('value');
+        $whatsapp = Setting::where('key','201019932826value');
 
         $message = urlencode(
             "حجز جديد\n" .

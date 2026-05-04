@@ -5,7 +5,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-7">
         <div class="card p-4">
-            <form action="{{ route('admin.committees.update', $committee) }}" method="POST">
+            <form action="{{ route('admin.committees.update', $committee) }}" method="POST" enctype="multipart/form-data"  >
                 @csrf @method('PUT')
                 @include('admin.committees._form')
                 <div class="d-flex gap-2 mt-4">

@@ -18,6 +18,19 @@
     <label class="form-label fw-bold">الوصف</label>
     <textarea name="description" class="form-control" rows="4">{{ old('description', $committee->description ?? '') }}</textarea>
 </div>
+<div class="mb-3">
+    <label class="form-label fw-bold">صورة اللجنة</label>
+    <input type="file" name="image" class="form-control"> {{-- يجب أن يكون الاسم image --}}
+    
+    @if(isset($committee) && $committee->image)
+        <div class="mt-2">
+            <small class="text-muted d-block mb-1">الصورة الحالية:</small>
+            <img src="{{ asset('storage/' . $committee->image) }}" width="150" class="img-thumbnail">
+        </div>
+    @endif
+</div>
+
+
 <div class="row g-3">
     <div class="col-md-6">
         <label class="form-label fw-bold">الترتيب</label>

@@ -8,11 +8,13 @@ class TripBooking extends Model
 {
     protected $fillable = [
         'trip_id',
+        'national_id',
         'name',
         'phone',
         'seats',
         'status',
         'admin_notes',
+        'membership_number',
     ];
 
     public function trip()

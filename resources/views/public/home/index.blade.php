@@ -26,7 +26,7 @@
             @php
             $links = [
                 ['icon'=>'bi-newspaper','label'=>'آخر الأخبار','route'=>'news.index','color'=>'#1a3a5c'],
-                ['icon'=>'bi-people','label'=>'اللجان','route'=>'committees','color'=>'#c8a84b'],
+                ['icon'=>'bi-people','label'=>'اللجان','route'=>'committees.index','color'=>'#c8a84b'],
                 ['icon'=>'bi-geo-alt','label'=>'الرحلات','route'=>'trips.index','color'=>'#198754'],
                 ['icon'=>'bi-trophy','label'=>'حجز الملعب','route'=>'stadium.index','color'=>'#dc3545'],
                 // الإضافة الجديدة هنا

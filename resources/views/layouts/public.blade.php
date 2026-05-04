@@ -59,7 +59,7 @@
             <ul class="navbar-nav ms-auto gap-1">
                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="bi bi-house-door me-1"></i>الرئيسية</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('news.index') }}"><i class="bi bi-newspaper me-1"></i>الأخبار</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('committees') }}"><i class="bi bi-people me-1"></i>اللجان</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('committees.index') }}"><i class="bi bi-people me-1"></i>اللجان</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('healthcare.index') }}"><i class="bi bi-heart-pulse me-1"></i>الرعاية الصحية</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('trips.index') }}"><i class="bi bi-geo-alt me-1"></i>الرحلات</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('stadium.index') }}"><i class="bi bi-trophy me-1"></i>حجز الملعب</a></li>
@@ -110,7 +110,7 @@
                 <h6 class="fw-bold text-white">روابط سريعة</h6>
                 <ul class="list-unstyled small">
                     <li><a href="{{ route('news.index') }}">الأخبار</a></li>
-                    <li><a href="{{ route('committees') }}">اللجان</a></li>
+                    <li><a href="{{ route('committees.index') }}">اللجان</a></li>
                     <li><a href="{{ route('trips.index') }}">الرحلات</a></li>
                     <li><a href="{{ route('stadium.index') }}">حجز الملعب</a></li>
                     <li>

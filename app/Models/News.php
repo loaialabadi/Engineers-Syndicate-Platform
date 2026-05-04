@@ -17,6 +17,7 @@ class News extends Model
         'image',
         'is_published',
         'published_at',
+        'created_by',
     ];
 
     protected $casts = [

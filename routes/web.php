@@ -9,12 +9,12 @@ use App\Http\Controllers\Public\TripController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CommitteeController as AdminCommitteeController;
-use App\Http\Controllers\Admin\TripController as AdminTripController;
+use App\Http\Controllers\Admin\Trip\TripController as AdminTripController;
 
 use App\Http\Controllers\Admin\Stadium\StadiumBookingController;
 use App\Http\Controllers\Admin\Stadium\StadiumSettingsController;
 
-use App\Http\Controllers\Admin\TripBookingController;
+use App\Http\Controllers\Admin\Trip\TripBookingController;
 use Illuminate\Support\Facades\Route;
 // Admin Healthcare Controllers (تأكد من المسارات هنا)
 use App\Http\Controllers\Admin\Healthcare\HealthcareController as AdminHealthcareController;
@@ -40,11 +40,15 @@ Route::prefix('news')->name('news.')->group(function () {
     Route::get('/{slug}', [NewsController::class, 'show'])->name('show');
 });
 
-Route::get('/committees', [CommitteeController::class, 'index'])->name('committees');
+Route::get('/committees', [CommitteeController::class, 'index'])->name('committees.index');
+Route::get('/committees/{id}', [CommitteeController::class, 'show'])->name('committees.show');
 
 Route::prefix('trips')->name('trips.')->group(function () {
     Route::get('/', [TripController::class, 'index'])->name('index');
     Route::get('/{slug}', [TripController::class, 'show'])->name('show');
+    // أضف هذا السطر مع روابط الرحلات العامة
+   Route::post('/{trip}/book', [TripController::class, 'book'])->name('book');
+
 });
 
 Route::prefix('stadium')->name('stadium.')->group(function () {

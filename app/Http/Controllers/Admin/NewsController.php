@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\NewsRequest;
+use Illuminate\Http\Request; // تم التغيير هنا
 use App\Models\News;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -23,17 +24,28 @@ class NewsController extends Controller
         return view('admin.news.create');
     }
 
-    public function store(NewsRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse // تم تغيير النوع هنا
     {
-        $data               = $request->validated();
+        // التحقق من البيانات يدوياً داخل الدالة
+        $data = $request->validate([
+            'title'        => 'required|string|max:255',
+            'excerpt'      => 'nullable|string',
+            'content'      => 'required|string',
+            'is_published' => 'nullable', 
+            'image'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $data['slug'] = Str::slug($request->title); 
         $data['created_by'] = Auth::id();
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('news', 'public');
         }
 
-        if ($data['is_published'] ?? false) {
+        if ($request->has('is_published')) {
             $data['published_at'] = now();
+            $data['is_published'] = true;
+        } else {
+            $data['is_published'] = false;
         }
 
         News::create($data);
@@ -47,9 +59,15 @@ class NewsController extends Controller
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(NewsRequest $request, News $news): RedirectResponse
+    public function update(Request $request, News $news): RedirectResponse // تم تغيير النوع هنا
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'title'        => 'required|string|max:255',
+            'excerpt'      => 'nullable|string',
+            'content'      => 'required|string',
+            'is_published' => 'nullable',
+            'image'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
         if ($request->hasFile('image')) {
             if ($news->image) {
@@ -58,8 +76,13 @@ class NewsController extends Controller
             $data['image'] = $request->file('image')->store('news', 'public');
         }
 
-        if (($data['is_published'] ?? false) && !$news->published_at) {
-            $data['published_at'] = now();
+        if ($request->has('is_published')) {
+            if (!$news->published_at) {
+                $data['published_at'] = now();
+            }
+            $data['is_published'] = true;
+        } else {
+            $data['is_published'] = false;
         }
 
         $news->update($data);

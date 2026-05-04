@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Trip;
 use Illuminate\Support\Str; 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TripRequest;
