@@ -24,9 +24,7 @@
                 <div class="col-auto">
                     <span class="badge py-2 px-3" style="background:#c8a84b"><i class="bi bi-tag me-1"></i>{{ number_format($trip->price) }} جنيه</span>
                 </div>
-                <div class="col-auto">
-                    <span class="badge bg-info py-2 px-3"><i class="bi bi-people me-1"></i>{{ $trip->available_seats }} مقعد متاح</span>
-                </div>
+
             </div>
 
             <div class="card p-4 mb-4 border-0 shadow-sm">

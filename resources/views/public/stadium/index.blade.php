@@ -4,33 +4,31 @@
 
 @section('content')
 
-<div class="container py-5">
+<div class="container py-4 py-md-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-12 col-md-10 col-lg-8">
 
-            <h2 class="text-center mb-4">حجز ملعب النقابة</h2>
+            <h2 class="text-center mb-4 fw-bold">حجز ملعب النقابة</h2>
 
             {{-- Info --}}
-            <div class="card p-4 mb-4 text-white border-0"
+            <div class="card p-3 p-md-4 mb-4 text-white border-0 shadow-sm"
                  style="background:linear-gradient(135deg,#1a3a5c,#2d5a8e);">
 
-                <div class="row text-center">
+                <div class="row text-center g-3">
 
-                    <div class="col-3">
-                        ⏰ من {{ $settings['stadium_open_time'] ?? '07:00' }}
-                        إلى {{ $settings['stadium_close_time'] ?? '22:00' }}
+                    <div class="col-12 col-md-6">
+                        ⏰<br>
+                        <small>
+                            من {{ $settings['stadium_open_time'] ?? '07:00' }}
+                            إلى {{ $settings['stadium_close_time'] ?? '22:00' }}
+                        </small>
                     </div>
 
-                    <div class="col-3">
-                        💰 {{ $settings['stadium_price'] ?? 0 }} جنيه / ساعة
-                    </div>
-
-                    <div class="col-3">
-                        📲 {{ $settings['whatsapp_number'] ?? '---' }}
-                    </div>
-
-                    <div class="col-3">
-                        📞 {{ $settings['contact_phone'] ?? '---' }}
+                    <div class="col-12 col-md-6">
+                        📲<br>
+                        <small>
+                            {{ $settings['whatsapp_number'] ?? '---' }}
+                        </small>
                     </div>
 
                 </div>
@@ -38,7 +36,7 @@
             </div>
 
             {{-- اختيار التاريخ --}}
-            <div class="card p-4 mb-4">
+            <div class="card p-3 p-md-4 mb-4 shadow-sm">
 
                 <form method="GET" action="{{ route('stadium.index') }}">
 
@@ -75,7 +73,7 @@
                 </div>
             @endif
 
-            {{-- no slots --}}
+            {{-- لا يوجد ساعات --}}
             @if(!empty($date) && empty($slots))
                 <div class="alert alert-warning text-center">
                     لا توجد ساعات متاحة في هذا اليوم
@@ -85,7 +83,7 @@
             {{-- slots --}}
             @if(!empty($slots))
 
-            <div class="card p-4">
+            <div class="card p-3 p-md-4 shadow-sm">
 
                 <form method="POST" action="{{ route('stadium.book') }}">
                     @csrf
@@ -94,15 +92,15 @@
 
                     <h5 class="mb-3">اختار الوقت</h5>
 
-                    <div class="row">
+                    <div class="row g-2">
 
                         @foreach($slots as $slot)
 
-                            <div class="col-3 mb-2">
+                            <div class="col-6 col-md-4 col-lg-3">
 
                                 @if($slot['booked'])
 
-                                    <button class="btn btn-danger w-100" disabled>
+                                    <button class="btn btn-danger w-100 small" disabled>
                                         {{ $slot['start'] }}<br>
                                         <small>محجوز</small>
                                     </button>
@@ -117,20 +115,11 @@
                                            class="btn-check"
                                            name="slots[]"
                                            value="{{ $slot['start'].'-'.$slot['end'] }}"
-                                           id="{{ $slotId }}"
-                                           autocomplete="off">
+                                           id="{{ $slotId }}">
 
-                                    <label class="btn btn-outline-success w-100"
+                                    <label class="btn btn-outline-success w-100 small"
                                            for="{{ $slotId }}">
-
                                         {{ $slot['start'] }} - {{ $slot['end'] }}
-
-                                        <br>
-
-                                        <small>
-                                            {{ $settings['stadium_price'] ?? 0 }} جنيه
-                                        </small>
-
                                     </label>
 
                                 @endif
@@ -162,17 +151,32 @@
                                    required>
                         </div>
 
-                        <div class="col-12">
-                            <select name="is_engineer" class="form-control">
-                                <option value="1">مهندس</option>
-                                <option value="0">غير مهندس</option>
-                            </select>
+                        <div class="col-12 mt-3">
+                            <label class="fw-bold mb-2">الصفة المهنية</label>
+
+                            <div class="row g-2">
+
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="is_engineer" id="eng_yes" value="1" checked>
+                                    <label class="btn btn-outline-primary w-100 py-2" for="eng_yes">
+                                        👷‍♂️<br>مهندس
+                                    </label>
+                                </div>
+
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="is_engineer" id="eng_no" value="0">
+                                    <label class="btn btn-outline-secondary w-100 py-2" for="eng_no">
+                                        👤<br>زائر
+                                    </label>
+                                </div>
+
+                            </div>
                         </div>
 
                     </div>
 
-                    <button class="btn btn-success w-100 mt-3">
-                        تأكيد الحجز عبر واتساب
+                    <button class="btn btn-success w-100 mt-4 py-2 fw-bold">
+                        💬 تأكيد الحجز عبر واتساب
                     </button>
 
                 </form>
@@ -185,12 +189,24 @@
     </div>
 </div>
 
-{{-- UI fix --}}
 <style>
 .btn-check:checked + .btn {
     background-color: #198754 !important;
     color: #fff !important;
     border-color: #198754 !important;
+}
+
+.btn-outline-success {
+    padding: 10px 5px;
+    font-size: 0.9rem;
+}
+
+/* تحسين للموبايل */
+@media (max-width: 576px) {
+    .btn-outline-success {
+        font-size: 0.8rem;
+        padding: 8px 3px;
+    }
 }
 </style>
 

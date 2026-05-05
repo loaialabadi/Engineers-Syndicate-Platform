@@ -123,7 +123,7 @@ class StadiumController extends Controller
             'status' => 'pending',
         ]);
 
-        $whatsapp = Setting::where('key','201019932826value');
+$whatsapp = Setting::where('key','whatsapp_number')->value('value');
 
         $message = urlencode(
             "حجز جديد\n" .
@@ -131,6 +131,8 @@ class StadiumController extends Controller
             "من: {$booking->start_time} إلى {$booking->end_time}"
         );
 
-        return redirect("https://wa.me/{$whatsapp}?text={$message}");
-    }
+return view('public.stadium.confirm', [
+    'booking' => $booking,
+    'whatsapp' => $whatsapp
+]);    }
 }
