@@ -11,29 +11,38 @@
             <h2 class="text-center mb-4 fw-bold">حجز ملعب النقابة</h2>
 
             {{-- Info --}}
-            <div class="card p-3 p-md-4 mb-4 text-white border-0 shadow-sm"
-                 style="background:linear-gradient(135deg,#1a3a5c,#2d5a8e);">
+<div class="card p-3 p-md-4 mb-4 border-0 shadow-sm stadium-info-card">
 
-                <div class="row text-center g-3">
+    <div class="row text-center g-3 align-items-center">
 
-                    <div class="col-12 col-md-6">
-                        ⏰<br>
-                        <small>
-                            من {{ $settings['stadium_open_time'] ?? '07:00' }}
-                            إلى {{ $settings['stadium_close_time'] ?? '22:00' }}
-                        </small>
-                    </div>
+        <div class="col-12 col-md-6">
+            <div class="info-box">
+                <div class="fs-3 mb-2">⏰</div>
 
-                    <div class="col-12 col-md-6">
-                        📲<br>
-                        <small>
-                            {{ $settings['whatsapp_number'] ?? '---' }}
-                        </small>
-                    </div>
+                <div class="fw-bold mb-1">مواعيد العمل</div>
 
-                </div>
-
+                <small>
+                    من {{ $settings['stadium_open_time'] ?? '07:00' }}
+                    إلى {{ $settings['stadium_close_time'] ?? '22:00' }}
+                </small>
             </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="info-box">
+                <div class="fs-3 mb-2">📲</div>
+
+                <div class="fw-bold mb-1">واتساب الحجز</div>
+
+                <small>
+                    {{ $settings['whatsapp_number'] ?? '---' }}
+                </small>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
             {{-- اختيار التاريخ --}}
             <div class="card p-3 p-md-4 mb-4 shadow-sm">

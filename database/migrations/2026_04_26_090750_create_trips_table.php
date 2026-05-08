@@ -18,7 +18,6 @@ Schema::create('trips', function (Blueprint $table) {
 
     $table->text('description');
     $table->string('destination')->nullable();
-
     $table->date('trip_date');
     $table->date('return_date')->nullable();
     $table->string('slug')->nullable(); // أضف nullable هنا

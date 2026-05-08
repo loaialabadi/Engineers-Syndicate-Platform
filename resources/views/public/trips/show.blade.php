@@ -5,37 +5,56 @@
 <div class="container py-5">
     <div class="row">
         <!-- قسم تفاصيل الرحلة -->
-        <div class="col-lg-8">
-            @if($trip->image_url)
-                <img src="{{ $trip->image_url }}" class="img-fluid rounded-3 mb-4 w-100" style="max-height:420px;object-fit:cover" alt="{{ $trip->title }}">
-            @endif
-            
-            <h2 class="fw-black mb-3">{{ $trip->title }}</h2>
-            
-            <div class="row g-3 mb-4">
-                <div class="col-auto">
-                    <span class="badge bg-primary py-2 px-3"><i class="bi bi-calendar me-1"></i>{{ $trip->trip_date->format('d M Y') }}</span>
-                </div>
-                @if($trip->destination)
-                <div class="col-auto">
-                    <span class="badge bg-secondary py-2 px-3"><i class="bi bi-geo-alt me-1"></i>{{ $trip->destination }}</span>
-                </div>
-                @endif
-                <div class="col-auto">
-                    <span class="badge py-2 px-3" style="background:#c8a84b"><i class="bi bi-tag me-1"></i>{{ number_format($trip->price) }} جنيه</span>
-                </div>
-
-            </div>
-
-            <div class="card p-4 mb-4 border-0 shadow-sm">
-                <h5 class="fw-bold mb-3 border-bottom pb-2">تفاصيل الرحلة</h5>
-                {!! $trip->description !!}
-            </div>
-
-            <a href="{{ route('trips.index') }}" class="btn btn-outline-secondary btn-lg">
-                <i class="bi bi-arrow-right me-1"></i> العودة للرحلات
-            </a>
+<div class="col-lg-8">
+    <!-- الصورة: متجاوبة تماماً مع زوايا مستديرة -->
+    @if($trip->image_url)
+        <div class="mb-4">
+            <img src="{{ $trip->image_url }}" class="img-fluid rounded-3 shadow-sm w-100" 
+                 style="max-height:420px; object-fit:cover;" alt="{{ $trip->title }}">
         </div>
+    @endif
+    
+    <!-- العنوان -->
+    <h2 class="fw-bold mb-3">{{ $trip->title }}</h2>
+    
+    <!-- شريط المعلومات: d-flex مع flex-wrap يضمن ترتيبهم تحت بعض في الشاشات الصغيرة -->
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <div class="badge bg-primary p-2 px-3">
+            <i class="bi bi-calendar me-1"></i> {{ $trip->trip_date->format('d M Y') }}
+        </div>
+
+        @if($trip->destination)
+            <div class="badge bg-secondary p-2 px-3">
+                <i class="bi bi-geo-alt me-1"></i> {{ $trip->destination }}
+            </div>
+        @endif
+
+        <div class="badge p-2 px-3" style="background:#c8a84b">
+            <i class="bi bi-tag me-1"></i> {{ number_format($trip->price) }} جنيه
+        </div>
+
+        @if(isset($settings['trips_whatsapp']))
+            <div class="badge bg-success p-2 px-3">
+                <i class="bi bi-whatsapp me-1"></i> {{ $settings['trips_whatsapp'] }}
+            </div>
+        @endif
+    </div>
+
+    <!-- بطاقة التفاصيل -->
+    <div class="card p-3 p-md-4 mb-4 border-0 shadow-sm bg-white">
+        <h5 class="fw-bold mb-3 border-bottom pb-2">تفاصيل الرحلة</h5>
+        <div class="text-muted" style="line-height: 1.8;">
+            {!! $trip->description !!}
+        </div>
+    </div>
+
+    <!-- زر العودة: يظهر بعرض كامل في الموبايل وبحجمه الطبيعي في الشاشات الكبيرة -->
+    <div class="d-grid d-md-block">
+        <a href="{{ route('trips.index') }}" class="btn btn-outline-secondary btn-lg">
+            <i class="bi bi-arrow-right me-1"></i> العودة للرحلات
+        </a>
+    </div>
+</div>
 
         <!-- قسم نموذج الحجز -->
         <div class="col-lg-4 mt-4 mt-lg-0">
@@ -86,9 +105,10 @@
                             <input type="number" name="seats" class="form-control" value="1" min="1" max="{{ $trip->available_seats }}" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
-                            <i class="bi bi-send me-1"></i> إرسال طلب الحجز
-                        </button>
+<button type="submit" class="btn btn-primary w-100 fw-bold py-2" style="background:#1a3a5c">
+    إرسال الطلب ومتابعة الحجز <i class="bi bi-arrow-left ms-1"></i>
+</button>
+
                     </form>
                 </div>
                 <div class="card-footer bg-light p-3">

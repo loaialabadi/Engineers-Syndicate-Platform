@@ -28,7 +28,7 @@ return new class extends Migration
             
             // عدد المقاعد المطلوبة في الحجز الواحد
             $table->integer('seats')->default(1);
-
+            $table->string('booking_reference')->unique(); // رقم الحجز الفريد
             // حالة الحجز (قيد الانتظار، مقبول، مرفوض)
             $table->enum('status', ['pending', 'confirmed', 'rejected'])->default('pending');
  $table->unique(['trip_id', 'national_id'], 'unique_trip_user');

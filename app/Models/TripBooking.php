@@ -15,6 +15,7 @@ class TripBooking extends Model
         'status',
         'admin_notes',
         'membership_number',
+        'booking_reference'
     ];
 
     public function trip()
@@ -26,4 +27,10 @@ class TripBooking extends Model
     {
         return $query->where('status', 'pending');
     }
+    protected static function booted()
+{
+    static::creating(function ($booking) {
+        $booking->booking_reference = 'TRIP-' . strtoupper(uniqid());
+    });
+}
 }

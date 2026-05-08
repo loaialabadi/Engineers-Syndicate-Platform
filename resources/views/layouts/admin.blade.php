@@ -86,6 +86,15 @@
         <a href="{{ route('home') }}" class="nav-link" target="_blank">
             <i class="bi bi-globe"></i> الموقع العام
         </a>
+
+        <a href="{{ route('admin.services.index') }}" class="nav-link" target="_blank">
+            <i class="bi bi-globe"></i> خدمات النقابه
+        </a>
+
+        <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
+            <i class="bi bi-gear-fill"></i> الإعدادات
+        </a>
+
         <form action="{{ route('logout') }}" method="POST" class="d-inline">
             @csrf
             <button type="submit" class="nav-link border-0 bg-transparent w-100 text-start" style="cursor:pointer">
