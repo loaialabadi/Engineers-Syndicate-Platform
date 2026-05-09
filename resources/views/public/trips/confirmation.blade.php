@@ -26,9 +26,12 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <a href="{{ $whatsappGroupLink }}" target="_blank" class="btn btn-success btn-lg fw-bold py-3 shadow-sm">
-                        <i class="bi bi-whatsapp me-2"></i> انضم لجروب الواتساب الآن
+                    <a href="{{ $whatsappDirectLink }}" 
+                    target="_blank" 
+                    class="btn btn-success btn-lg px-5 py-3 fw-bold rounded-pill shadow-sm">
+                        <i class="bi bi-whatsapp me-2"></i> إرسال تفاصيل الحجز عبر واتساب
                     </a>
+
                     <a href="{{ route('trips.index') }}" class="btn btn-link text-muted mt-2">العودة للرئيسية</a>
                 </div>
             </div>

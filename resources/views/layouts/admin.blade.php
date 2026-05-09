@@ -95,6 +95,14 @@
             <i class="bi bi-gear-fill"></i> الإعدادات
         </a>
 
+    
+        <a href="{{ route('admin.contacts.index') }}" 
+        class="nav-link {{ request()->routeIs('admin.contacts*') ? 'active' : '' }}">
+            <i class="bi bi-envelope-fill"></i>  رسائل التواصل
+        </a>
+
+
+
         <form action="{{ route('logout') }}" method="POST" class="d-inline">
             @csrf
             <button type="submit" class="nav-link border-0 bg-transparent w-100 text-start" style="cursor:pointer">

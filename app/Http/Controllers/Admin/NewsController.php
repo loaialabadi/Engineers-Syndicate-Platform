@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request; // تم التغيير هنا
+use Illuminate\Http\Request; 
 use App\Models\News;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;

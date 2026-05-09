@@ -44,6 +44,8 @@ class TripController extends Controller
 
 public function book(Request $request, Trip $trip): RedirectResponse
 {
+
+
     $request->validate([
         'name'              => 'required|string|max:255',
         'phone'             => 'required|string|max:20',
@@ -83,26 +85,34 @@ public function confirmation(TripBooking $booking)
 {
     $trip = $booking->trip;
 
-    // رقم الواتساب من settings
-    $whatsapp = Setting::where('key', 'trips_whatsapp_number')
-        ->value('value');
+    // جلب رقم واتساب الرحلات من الإعدادات (تأكد أن Key مطابق لما في الإعدادات)
+    $whatsapp = Setting::where('key', 'trips_whatsapp')->value('value') ?? '201019932826';
+    
+    // تنظيف الرقم من أي مسافات أو علامات
+    $clean_phone = preg_replace('/[^0-9]/', '', $whatsapp);
 
-    // لينك الجروب أو رسالة مباشرة
+    // صياغة رسالة احترافية تحتوي على كل بيانات الحجز
     $message = urlencode(
-        "تأكيد حجز رحلة\n" .
-        "رقم الحجز: {$booking->booking_reference}\n" .
-        "الاسم: {$booking->name}\n" .
-        "الرحلة: {$trip->title}"
+        "🔔 *طلب حجز رحلة جديد*\n\n" .
+        "📍 *الرحلة:* {$trip->title}\n" .
+        "🔢 *رقم الحجز:* `{$booking->booking_reference}`\n" .
+        "👤 *الاسم:* {$booking->name}\n" .
+        "📞 *رقم الهاتف:* {$booking->phone}\n" .
+        "🪑 *عدد المقاعد:* {$booking->seats}\n" .
+        "🆔 *رقم العضوية:* " . ($booking->membership_number ?? 'غير مسجل') . "\n\n" .
+        "يرجى مراجعة الحجز وإفادتي بالخطوات التالية."
     );
 
-    $whatsappGroupLink = "https://wa.me/{$whatsapp}?text={$message}";
+    // الرابط الجديد للمحادثة المباشرة
+    $whatsappDirectLink = "https://wa.me/{$clean_phone}?text={$message}";
 
     return view('public.trips.confirmation', compact(
-        'booking',
-        'trip',
-        'whatsappGroupLink'
+        'booking', 
+        'trip', 
+        'whatsappDirectLink' // قمنا بتغيير الاسم ليكون معبراً أكثر
     ));
 }
+
 
 
 }

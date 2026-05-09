@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -436,6 +435,15 @@
                     </a>
                 </li>
 
+
+               
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contact.index') }}">
+                        <i class="bi bi-envelope me-1"></i>
+                        تواصل معنا
+                    </a>
+                </li>   
+
             </ul>
 
             <div class="ms-lg-3 mt-3 mt-lg-0">
@@ -620,13 +628,20 @@
 
 {{-- ================= FLOATING WHATSAPP ================= --}}
 
-<a href="https://wa.me/201019932826"
+@php
+    $whatsapp = \App\Models\Setting::where('key', 'contact_phone')->value('value') ?? '201019932826';
+    $contact_phone = preg_replace('/[^0-9]/', '', $whatsapp);
+    
+    // ترميز الرسالة لضمان عمل الرابط بشكل صحيح مع المتصفحات
+    $welcome_msg = urlencode("مرحبًا، لدي استفسار بخصوص خدمات نقابة المهندسين - قنا. أرجو الرد في أقرب وقت ممكن.");
+@endphp
+
+<a href="https://wa.me/{{ $contact_phone }}?text={{ $welcome_msg }}"
    target="_blank"
    class="floating-whatsapp">
-
     <i class="bi bi-whatsapp"></i>
-
 </a>
+
 
 {{-- ================= SCRIPTS ================= --}}
 

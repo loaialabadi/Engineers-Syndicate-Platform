@@ -34,7 +34,7 @@
 
                             <td>
                                 @if($service->image)
-                                    <img src="{{ asset('storage/'.$service->image) }}"
+                                     <img src="{{ asset($service->image) }}"
                                          width="50" height="50"
                                          style="object-fit:cover;border-radius:8px;">
                                 @else

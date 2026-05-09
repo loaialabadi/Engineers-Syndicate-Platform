@@ -11,6 +11,8 @@ use App\Http\Controllers\Public\CommitteeController;
 use App\Http\Controllers\Public\TripController;
 use App\Http\Controllers\Public\StadiumController;
 use App\Http\Controllers\Public\HealthcareController as PublicHealthcareController;
+use App\Http\Controllers\Public\ContactController;
+
 
 // Admin Controllers
 use App\Http\Controllers\Admin\DashboardController;
@@ -32,6 +34,10 @@ use App\Http\Controllers\Admin\Healthcare\PharmacyController;
 
 use App\Http\Controllers\Admin\ServiceController as ServiceController;
 use App\Http\Controllers\Public\ServiceController as PublicServiceController;
+
+
+use App\Http\Controllers\Admin\ContactMessageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +149,17 @@ Route::prefix('services')->name('services.')->group(function () {
     Route::get('/service{service}', [PublicServiceController::class, 'show'])->name('show');
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Contact
+|--------------------------------------------------------------------------
+*/
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Admin Dashboard
@@ -273,5 +290,7 @@ Route::prefix('admin')
 
         });
     // Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
+
+    Route::resource('contacts', ContactMessageController::class);
 
 });

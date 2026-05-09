@@ -10,12 +10,15 @@
             <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                 
                 <!-- الصورة: متجاوبة مع تغطية كاملة -->
-                @if($service->image)
-    <img src="{{ asset($service->image) }}"
-                         class="img-fluid w-100" 
-                         style="max-height: 400px; object-fit: cover;" 
-                         alt="{{ $service->title }}">
-                @endif
+<!-- الصورة: تظهر بالكامل مع خلفية خفيفة إذا كانت المقاسات مختلفة -->
+@if($service->image)
+    <div class="service-image-container">
+        <img src="{{ asset($service->image) }}"
+             class="service-main-image" 
+             alt="{{ $service->title }}">
+    </div>
+@endif
+
 
                 <div class="card-body p-4 p-md-5">
                     <!-- العنوان -->
@@ -66,5 +69,44 @@
     @media (max-width: 768px) {
         .btn-lg { width: 100%; }
     }
+      /* الحاوية: تمنع خروج الصورة عن الحدود المخصصة لها */
+    .service-image-container {
+        width: 100%;
+        height: 400px; /* يمكنك تعديل الارتفاع حسب رغبتك */
+        background-color: #f8f9fa;
+        overflow: hidden; /* ضروري لقص الصورة الزائدة عند الزووم */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* الصورة في وضعها الطبيعي */
+    .service-main-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* تظهر كاملة داخل الـ 400px */
+        transition: transform 0.5s ease; /* تنعيم الحركة */
+        cursor: zoom-in;
+    }
+
+    /* التأثير عند مرور الماوس: تكبير الصورة لتظهر تفاصيلها */
+    .service-image-container:hover .service-main-image {
+        transform: scale(1.5); /* يكبر الصورة بمقدار مرة ونصف */
+        object-fit: cover; /* اختيار اختياري: يجعلها تملأ الفراغات عند الزووم */
+    }
+
+    /* تحسين للموبايل: تقليل الارتفاع قليلًا */
+    @media (max-width: 768px) {
+        .service-image-container {
+            height: 250px;
+        }
+        /* نلغي التكبير في الموبايل لأنه يعتمد على اللمس */
+        .service-image-container:hover .service-main-image {
+            transform: none;
+        }
+    }
 </style>
+
 @endsection

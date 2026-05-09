@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             CommitteeSeeder::class,
             NewsSeeder::class,
             TripSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }
