@@ -60,7 +60,23 @@ public function store(Request $request)
     }
 
     $data['is_active'] = $request->boolean('is_active');
+    $slug = Str::slug($request->name);
 
+// لو فاضي
+if (empty($slug)) {
+    $slug = time() . '-' . Str::random(5);
+}
+
+// منع التكرار
+$originalSlug = $slug;
+$count = 1;
+
+while (Lab::where('slug', $slug)->exists()) {
+    $slug = $originalSlug . '-' . $count;
+    $count++;
+}
+
+$data['slug'] = $slug;
     Lab::create($data);
 
     return redirect()

@@ -8,13 +8,18 @@ class Doctor extends Model
 {
     protected $fillable = [
         'name',
+        'slug',
         'specialty',
+        'description',
         'phone',
+        'whatsapp',
+        'image',
         'address',
+        'city',
+        'location_url',
+        'working_hours',
         'discount_percent',
         'is_active',
-        'image',
-        
     ];
 
     protected $casts = [

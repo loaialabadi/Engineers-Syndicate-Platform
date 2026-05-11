@@ -70,11 +70,20 @@
             </div>
         </div>
 
-        <div class="form-check mb-3">
-            <input type="checkbox" name="is_active" class="form-check-input" checked>
-            <label class="form-check-label">نشط</label>
-        </div>
+<div class="form-check mb-3">
 
+    {{-- القيمة الافتراضية لو مش متعلم --}}
+    <input type="hidden" name="is_active" value="0">
+
+    <input type="checkbox"
+           name="is_active"
+           value="1"
+           class="form-check-input"
+           checked>
+
+    <label class="form-check-label">نشط</label>
+
+</div>
         <button class="btn btn-success">حفظ</button>
 
     </form>

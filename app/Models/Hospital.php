@@ -8,9 +8,16 @@ class Hospital extends Model
 {
     protected $fillable = [
         'name',
-        'address',
-        'image',    
+        'slug',
+        'description',
+        'specialty',
         'phone',
+        'whatsapp',
+        'image',
+        'address',
+        'city',
+        'location_url',
+        'working_hours',
         'discount_percent',
         'is_active',
     ];
@@ -26,14 +33,11 @@ class Hospital extends Model
         return $query->where('is_active', true);
     }
 
-    // 🔹 Accessor: full image UR
-    //
+    // 🔹 Accessor: image URL
     public function getImageUrlAttribute()
     {
-        if ($this->image) {
-            return asset('storage/' . $this->image);
-        }
-
-        return asset('images/default.png');
+        return $this->image
+            ? asset('storage/' . $this->image)
+            : asset('images/default.png');
     }
 }

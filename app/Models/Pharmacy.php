@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,8 +7,16 @@ class Pharmacy extends Model
 {
     protected $fillable = [
         'name',
-        'address',
+        'slug',
+        'description',
+        'specialty',
         'phone',
+        'whatsapp',
+        'image',
+        'address',
+        'city',
+        'location_url',
+        'working_hours',
         'discount_percent',
         'is_active',
     ];
@@ -19,19 +26,17 @@ class Pharmacy extends Model
         'discount_percent' => 'float',
     ];
 
-    // 🔹 Scope: active pharmacies
+    // active scope
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
     }
 
-        // 🔹 Accessor: full image URL
-        public function getImageUrlAttribute()
-        {
-            if ($this->image) {
-                return asset('storage/' . $this->image);
-            }
-    
-            return asset('images/default.png');
-        }
+    // image URL
+    public function getImageUrlAttribute()
+    {
+        return $this->image
+            ? asset('storage/' . $this->image)
+            : asset('images/default.png');
+    }
 }

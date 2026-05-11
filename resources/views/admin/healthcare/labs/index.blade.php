@@ -10,10 +10,13 @@
         إضافة معمل
     </a>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered align-middle">
         <thead>
             <tr>
+                <th>الصورة</th>
                 <th>الاسم</th>
+                <th>التخصص</th>
+                <th>المدينة</th>
                 <th>العنوان</th>
                 <th>الهاتف</th>
                 <th>مواعيد العمل</th>
@@ -26,11 +29,41 @@
         <tbody>
         @forelse($labs as $lab)
             <tr>
+
+                {{-- الصورة --}}
+                <td>
+                    @if($lab->image)
+                        <img src="{{ asset('storage/' . $lab->image) }}"
+                             width="50"
+                             height="50"
+                             class="rounded">
+                    @else
+                        <span class="text-muted">-</span>
+                    @endif
+                </td>
+
+                {{-- الاسم --}}
                 <td>{{ $lab->name }}</td>
-                <td>{{ $lab->address }}</td>
-                <td>{{ $lab->phone }}</td>
-                <td>{{ $lab->working_hours }}</td>
+
+                {{-- التخصص --}}
+                <td>{{ $lab->specialty ?? '-' }}</td>
+
+                {{-- المدينة --}}
+                <td>{{ $lab->city ?? '-' }}</td>
+
+                {{-- العنوان --}}
+                <td>{{ $lab->address ?? '-' }}</td>
+
+                {{-- الهاتف --}}
+                <td>{{ $lab->phone ?? '-' }}</td>
+
+                {{-- مواعيد العمل --}}
+                <td>{{ $lab->working_hours ?? '-' }}</td>
+
+                {{-- الخصم --}}
                 <td>{{ $lab->discount_percent }}%</td>
+
+                {{-- الحالة --}}
                 <td>
                     @if($lab->is_active)
                         <span class="badge bg-success">نشط</span>
@@ -38,14 +71,17 @@
                         <span class="badge bg-secondary">غير نشط</span>
                     @endif
                 </td>
-                <td>
+
+                {{-- الإجراءات --}}
+                <td class="d-flex gap-1">
 
                     <a href="{{ route('admin.healthcare.labs.edit', $lab) }}"
-                       class="btn btn-warning btn-sm">تعديل</a>
+                       class="btn btn-warning btn-sm">
+                        تعديل
+                    </a>
 
                     <form method="POST"
-                          action="{{ route('admin.healthcare.labs.destroy', $lab) }}"
-                          style="display:inline;">
+                          action="{{ route('admin.healthcare.labs.destroy', $lab) }}">
                         @csrf
                         @method('DELETE')
 
@@ -56,10 +92,11 @@
                     </form>
 
                 </td>
+
             </tr>
         @empty
             <tr>
-                <td colspan="7" class="text-center">لا توجد بيانات</td>
+                <td colspan="10" class="text-center">لا توجد بيانات</td>
             </tr>
         @endforelse
         </tbody>

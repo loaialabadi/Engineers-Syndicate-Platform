@@ -11,21 +11,42 @@ return new class extends Migration
      */
     public function up(): void
     {
-Schema::create('doctors', function (Blueprint $table) {
-    $table->id();
+        Schema::create('doctors', function (Blueprint $table) {
 
-    $table->string('name');
-    $table->string('specialty')->nullable();
-    $table->string('phone')->nullable();
-    $table->string('image')->nullable();
-    $table->string('address')->nullable();
+            $table->id();
 
-    $table->decimal('discount_percent', 5, 2)->default(0);
+            // البيانات الأساسية
+            $table->string('name');
+            $table->string('slug')->unique();
 
-    $table->boolean('is_active')->default(true);
+            // معلومات الدكتور
+            $table->string('specialty')->nullable();
+            $table->text('description')->nullable();
 
-    $table->timestamps();
-});
+            // التواصل
+            $table->string('phone')->nullable();
+            $table->string('whatsapp')->nullable();
+
+            // الصورة
+            $table->string('image')->nullable();
+
+            // العنوان
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+
+            // رابط الخريطة
+$table->longText('location_url')->nullable();
+            // مواعيد العمل
+            $table->string('working_hours')->nullable();
+
+            // نسبة الخصم
+            $table->decimal('discount_percent', 5, 2)->default(0);
+
+            // الحالة
+            $table->boolean('is_active')->default(true);
+
+            $table->timestamps();
+        });
     }
 
     /**

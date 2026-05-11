@@ -40,8 +40,7 @@ return new class extends Migration
             $table->string('address')->nullable();
 
             // رابط الخرائط
-            $table->string('location_url')->nullable();
-
+            $table->longText('location_url')->nullable();
             // المدينة / المنطقة
             $table->string('city')->nullable();
 

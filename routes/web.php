@@ -134,11 +134,12 @@ Route::prefix('stadium')->name('stadium.')->group(function () {
 
 Route::get('/healthcare', [PublicHealthcareController::class, 'index'])
     ->name('healthcare.index');
+Route::get('/healthcare/{type}/{id}', [PublicHealthcareController::class, 'show'])
+    ->name('healthcare.show');
 
 
 
     /*
-|--------------------------------------------------------------------------
 | Services
 |--------------------------------------------------------------------------
 */

@@ -4,34 +4,23 @@
 
 <div class="container">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold">إضافة طبيب</h3>
-    </div>
-
-    {{-- عرض الأخطاء --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <h3 class="mb-4">تعديل بيانات الطبيب</h3>
 
     <form method="POST"
-          action="{{ route('admin.healthcare.doctors.store') }}"
+          action="{{ route('admin.healthcare.doctors.update', $doctor) }}"
           enctype="multipart/form-data">
 
         @csrf
+        @method('PUT')
 
         {{-- الاسم --}}
         <div class="mb-3">
             <label class="form-label">اسم الطبيب *</label>
+
             <input type="text"
                    name="name"
                    class="form-control"
-                   value="{{ old('name') }}"
+                   value="{{ old('name', $doctor->name) }}"
                    required>
         </div>
 
@@ -40,9 +29,9 @@
             <label class="form-label">الوصف</label>
 
             <textarea name="description"
-                      rows="5"
                       class="form-control"
-                      placeholder="اكتب نبذة كاملة عن الطبيب والخدمات التي يقدمها">{{ old('description') }}</textarea>
+                      rows="4"
+                      placeholder="اكتب وصف عن الطبيب والخدمات الطبية...">{{ old('description', $doctor->description) }}</textarea>
         </div>
 
         {{-- التخصص --}}
@@ -52,8 +41,8 @@
             <input type="text"
                    name="specialty"
                    class="form-control"
-                   value="{{ old('specialty') }}"
-                   placeholder="مثال: باطنة - عظام - أطفال">
+                   value="{{ old('specialty', $doctor->specialty) }}"
+                   placeholder="مثال: جراحة - باطنة - أسنان">
         </div>
 
         <div class="row">
@@ -65,7 +54,7 @@
                 <input type="text"
                        name="phone"
                        class="form-control"
-                       value="{{ old('phone') }}">
+                       value="{{ old('phone', $doctor->phone) }}">
             </div>
 
             {{-- واتساب --}}
@@ -75,7 +64,7 @@
                 <input type="text"
                        name="whatsapp"
                        class="form-control"
-                       value="{{ old('whatsapp') }}">
+                       value="{{ old('whatsapp', $doctor->whatsapp) }}">
             </div>
 
         </div>
@@ -89,7 +78,7 @@
                 <input type="text"
                        name="address"
                        class="form-control"
-                       value="{{ old('address') }}">
+                       value="{{ old('address', $doctor->address) }}">
             </div>
 
             {{-- المدينة --}}
@@ -99,20 +88,19 @@
                 <input type="text"
                        name="city"
                        class="form-control"
-                       value="{{ old('city') }}"
-                       placeholder="مثال: قنا">
+                       value="{{ old('city', $doctor->city) }}">
             </div>
 
         </div>
 
-        {{-- رابط الموقع --}}
+        {{-- رابط الخرائط --}}
         <div class="mb-3">
-            <label class="form-label">رابط الموقع على الخريطة</label>
+            <label class="form-label">رابط الموقع على الخرائط</label>
 
             <input type="url"
                    name="location_url"
                    class="form-control"
-                   value="{{ old('location_url') }}"
+                   value="{{ old('location_url', $doctor->location_url) }}"
                    placeholder="Google Maps URL">
         </div>
 
@@ -123,54 +111,60 @@
             <input type="text"
                    name="working_hours"
                    class="form-control"
-                   value="{{ old('working_hours') }}"
+                   value="{{ old('working_hours', $doctor->working_hours) }}"
                    placeholder="مثال: من 5 مساءً إلى 10 مساءً">
         </div>
 
-        <div class="row">
+        {{-- نسبة الخصم --}}
+        <div class="mb-3">
+            <label class="form-label">نسبة الخصم (%)</label>
 
-            {{-- الخصم --}}
-            <div class="col-md-6 mb-3">
-                <label class="form-label">نسبة الخصم (%)</label>
-
-                <input type="number"
-                       name="discount_percent"
-                       class="form-control"
-                       value="{{ old('discount_percent', 0) }}"
-                       min="0"
-                       max="100">
-            </div>
-
-            {{-- الحالة --}}
-            <div class="col-md-6 mb-3">
-                <label class="form-label d-block">الحالة</label>
-
-<div class="form-check mb-3">
-    <input type="checkbox"
-           name="is_active"
-           value="1"
-           class="form-check-input"
-           checked>
-
-    <label class="form-check-label">
-        نشط
-    </label>
-</div>
-            </div>
-
+            <input type="number"
+                   name="discount_percent"
+                   class="form-control"
+                   min="0"
+                   max="100"
+                   value="{{ old('discount_percent', $doctor->discount_percent) }}">
         </div>
 
-        {{-- الصورة --}}
-        <div class="mb-4">
-            <label class="form-label">صورة الطبيب</label>
+        {{-- الصورة الحالية --}}
+        @if($doctor->image)
+            <div class="mb-3">
+
+                <label class="form-label d-block">الصورة الحالية</label>
+
+                <img src="{{ asset('storage/' . $doctor->image) }}"
+                     width="120"
+                     class="rounded border">
+            </div>
+        @endif
+
+        {{-- صورة جديدة --}}
+        <div class="mb-3">
+            <label class="form-label">تغيير الصورة</label>
 
             <input type="file"
                    name="image"
                    class="form-control">
         </div>
 
-        <button class="btn btn-success px-4">
-            حفظ الطبيب
+        {{-- الحالة --}}
+        <div class="mb-3 form-check">
+
+            <input type="checkbox"
+                   name="is_active"
+                   class="form-check-input"
+                   value="1"
+                   {{ old('is_active', $doctor->is_active) ? 'checked' : '' }}>
+
+            <label class="form-check-label">
+                نشط
+            </label>
+
+        </div>
+
+        <button class="btn btn-primary px-4">
+            تحديث البيانات
         </button>
 
     </form>
