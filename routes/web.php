@@ -240,16 +240,19 @@ Route::prefix('admin')
     | Stadium
     |--------------------------------------------------------------------------
     */
+Route::prefix('stadium')->name('stadium.')->group(function () {
 
-    Route::prefix('stadium')->name('stadium.')->group(function () {
+    Route::get('bookings', [StadiumBookingController::class, 'index'])
+        ->name('bookings');
 
-        Route::get('bookings', [StadiumBookingController::class, 'index'])
-            ->name('bookings');
+    Route::patch('bookings/{booking}/status', [StadiumBookingController::class, 'updateStatus'])
+        ->name('bookings.status');
 
-        Route::patch('bookings/{booking}/status', [StadiumBookingController::class, 'updateStatus'])
-            ->name('bookings.status');
+    Route::get('settings', function () {
+        return view('admin.stadium.settings');
+    })->name('settings');
 
-    });
+});
 
     /*
     |--------------------------------------------------------------------------
