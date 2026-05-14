@@ -249,7 +249,7 @@ Route::prefix('stadium')->name('stadium.')->group(function () {
         ->name('bookings.status');
 
     Route::get('settings', function () {
-        return view('admin.stadium.settings');
+        return view('admin.stadium.settings.index');
     })->name('settings');
 
 });
